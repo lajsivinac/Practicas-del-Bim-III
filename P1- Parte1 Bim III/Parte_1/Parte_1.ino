@@ -23,9 +23,9 @@ long Sensor;
 long Distancia;
 int Deteccion = 0;
 int num = 0;
-int maxPersonas = 9; 
+const int maxPersonas = 9; 
 
-int numero9 [] = {5, 6, 7, 10, 11};
+int numero9 [] = {5, 6, 7, 10, 11}; 
 int numero8 [] = {5, 6, 7, 8, 9, 10, 11};
 int numero7 [] = {5, 6, 7};
 int numero6 [] = {5, 10, 11, 7, 8, 9};
@@ -64,7 +64,6 @@ void medirDistancia() {
   Serial.print(Distancia);
   Serial.print("cm ");
   Serial.println();
-  
 }
 
 void pinesdesalida() {
@@ -77,8 +76,10 @@ void Personas() {
   if (Distancia >= 6 && Distancia <= 10) {
     Serial.println("Entrada detectada");
     Deteccion++;
-    if (Deteccion <= maxPersonas) {
+    if (Deteccion < maxPersonas) {
       pixel.setPixelColor(0, 0, 255, 0); // Verde
+    } else {
+      pixel.setPixelColor(0, 255, 0, 0); // Rojo
     }
     pixel.show();
   }
@@ -88,58 +89,54 @@ void conteo() {
   for (int i = 0; i < 7; i++) {
     digitalWrite(pines[i], LOW);
   }
-  if (Deteccion > maxPersonas){
-    digitalWrite(11, HIGH);
-}
 
- else {
+  if (Deteccion >= maxPersonas) {
+    digitalWrite(11, HIGH); 
+  } else {
     switch (Deteccion) {
       case 0:
         for (int i = 0; i < 6; i++)
           digitalWrite(numero0[i], HIGH);
         break;
       case 1:
-        for (int i = 0; i < 2; i++)
+        for (int i = 0;  i < 2; i++)
           digitalWrite(numero1[i], HIGH);
         break;
       case 2:
-        for (int i = 0; i < 5; i++)
+        for (int i = 0;  i < 5; i++)
           digitalWrite(numero2[i], HIGH);
         break;
       case 3:
-        for (int i = 0; i < 5; i++) 
+        for (int i = 0;  i < 5; i++) 
           digitalWrite(numero3[i], HIGH);
         break;
       case 4:
-        for (int i = 0; i < 4; i++) 
+        for (int i = 0;  i < 4; i++) 
           digitalWrite(numero4[i], HIGH);
         break;
       case 5:
-        for (int i = 0; i < 5; i++) 
+        for (int i = 0;  i < 5; i++) 
           digitalWrite(numero5[i], HIGH);
         break;
-      
       case 6:
-        for (int i = 0; i < 6; i++) 
-          
+        for (int i = 0;  i < 6; i++) 
           digitalWrite(numero6[i], HIGH);
         break;
       case 7:
-        for (int i = 0; i < 3; i++) 
+        for (int i = 0;  i < 3; i++) 
           digitalWrite(numero7[i], HIGH);
         break;
       case 8:
-        for (int i = 0; i < 7; i++) 
+        for (int i = 0;  i < 7; i++) 
           digitalWrite(numero8[i], HIGH);
         break;
       case 9:
-        for (int i = 0; i < 5; i++) 
-          digitalWrite(numero9[i], HIGH);  
-        delay(100);
-        pixel.setPixelColor(0, 255, 0, 0); // Rojo
-        pixel.show();
-        break; 
-    
+        for (int i = 0;  i < 5; i++) 
+          digitalWrite(numero9[i], HIGH);
+         for (int i = 0;  i < 5; i++) 
+          digitalWrite(numero9[i], LOW);
+      	digitalWrite(11, HIGH);
+        break;
     }
   }
 }
@@ -149,4 +146,3 @@ void salidas() {
     pinMode(pines[p], OUTPUT);
   }
 }
-
