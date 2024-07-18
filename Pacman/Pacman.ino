@@ -5,7 +5,7 @@
    Quinto electronica
    Codigo Tecnico: EB5AM 
    Curso: Taller de electronica digital y reparacion de computadoras I
-   Proyecto: 
+   Proyecto: Pacman 
    Dev: Ludwyn Steven Ajsivinac Alonzo
    Fecha: 18 de Julio
 */
