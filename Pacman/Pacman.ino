@@ -16,11 +16,8 @@
 #define din_matrix  2  //pin2 del arduino conectado al pin DIN de la matriz led
 #define cs_matrix   3  //pin2 del arduino conectado al pin CS de la matriz led
 #define clk_matrix  4  //pin4 del arduino conectado al pin CLK de la matriz led
-#define canal_pot   A0  //A0 del arduino conectado al pin pot
+#define canal_pot   A1  //A0 del arduino conectado al pin pot
 
-
-unsigned int valor_adc_pot;
-unsigned char velocidad;
 
 
 
@@ -57,13 +54,12 @@ void setup() {
    PacmanMatrix.setIntensity(0,15);
    PacmanMatrix.clearDisplay(0);
    Serial.println("Uso de la matriz led");
-   pinMode(canal_pot, INPUT);
-
+   
 }
 
 void loop() {
- valor_adc_pot = analogRead(canal_pot); 
- velocidad = map(valor_adc_pot,0,1023,50,1500); 
+ int valor_adc_pot = analogRead(canal_pot); 
+ int velocidad = map(valor_adc_pot,0,1023,100,5000); 
  pacmanabierto();
  delay(velocidad);
  pacmancerrado();
