@@ -1,3 +1,16 @@
+/*
+   Fundacion Kinal
+   Centro educativo tecnico laboral Kinal
+   Quinto perito
+   Quinto electronica
+   Codigo Tecnico: EB5AM 
+   Curso: Taller de electronica digital y reparacion de computadoras I
+   Proyecto: Final
+   Dev: Ludwyn Steven ajsivinac Alonzo
+   Fecha: 1/10/24
+   link de la simulacion: 
+   
+*/
 #include <SoftwareSerial.h>
 #include <TimerOne.h>
 
