@@ -14,43 +14,41 @@
 #include <SoftwareSerial.h>
 #include <TimerOne.h>
 
-// Definición de pines
-const int pin_BT_Rx = 11;
-const int pin_BT_Tx = 10;
-const int pin_Triac = 3;
+int pinRx = 11;
+int pinTx = 10;
+int pinTriac = 3;
 
-// Comunicación Serial con el Bluetooth
-SoftwareSerial BT(pin_BT_Rx, pin_BT_Tx);
+SoftwareSerial BT(pinRx, pinTx);
 
-// Variables globales
+
 volatile int contador = 0;
 volatile boolean hayCruceCero = false;
 int tiempoInterrupcion = 100;
 int nivelDimerizado;
 
 void setup() {
-  BT.begin(9600);      // Inicialización del Bluetooth
-  Serial.begin(9600);  // Inicialización del Serial Monitor
+  BT.begin(9600);      
+  Serial.begin(9600);  
 
-  // Configuración de pines
-  pinMode(pin_Triac, OUTPUT);
+ 
+  pinMode(pinTriac, OUTPUT);
 
   // Configuración de interrupciones
-  attachInterrupt(digitalPinToInterrupt(2), detectarCruceCero, RISING);  // Pin 2 para interrupción de cruce por cero
-  Timer1.initialize(tiempoInterrupcion);  // Inicialización del temporizador
-  Timer1.attachInterrupt(controlarDimerizacion, tiempoInterrupcion);  // Asignación de la función de dimmer
+  attachInterrupt(digitalPinToInterrupt(2), detectarCruceCero, RISING);  
+  Timer1.initialize(tiempoInterrupcion);  
+  Timer1.attachInterrupt(controlarDimerizacion, tiempoInterrupcion);  
 }
 
 void detectarCruceCero() {
   hayCruceCero = true;
-  contador = 0;  // Reinicio de contador
-  digitalWrite(pin_Triac, LOW);  // Apagar Triac en cruce por cero
+  contador = 0;  
+  digitalWrite(pinTriac, LOW);  
 }
 
 void controlarDimerizacion() {
   if (hayCruceCero) {
     if (contador >= nivelDimerizado) {
-      digitalWrite(pin_Triac, HIGH);  // Encender Triac después del tiempo correspondiente
+      digitalWrite(pinTriac, HIGH);  
       contador = 0;
       hayCruceCero = false;
     } else {
@@ -60,9 +58,8 @@ void controlarDimerizacion() {
 }
 
 void loop() {
-  // Lectura de intensidad desde el módulo Bluetooth
   if (BT.available() > 0) {
-    int intensidad = BT.read();  // Leer la intensidad desde Bluetooth
-    nivelDimerizado = map(intensidad, 0, 100, 83, 0);  // Mapear intensidad de 0-100 al control del Triac
+    int intensidad = BT.read();  
+    nivelDimerizado = map(intensidad, 0, 100, 83, 0);  
   }
 }
